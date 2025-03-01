@@ -1,0 +1,286 @@
+local screenGui = Instance.new("ScreenGui")
+local frame = Instance.new("Frame")
+local frame2 = Instance.new("Frame")
+local scrollingFrame = Instance.new("ScrollingFrame")  -- Added ScrollingFrame
+local textBox = Instance.new("TextBox")
+local runButton = Instance.new("TextButton")
+local titleLabel = Instance.new("TextLabel")
+local clearButton = Instance.new("TextButton")
+local UIGridLayout = Instance.new("UIGridLayout")
+local scriptsframe = Instance.new("TextButton")
+
+function addCorners(name, Radius)
+	local C = Instance.new("UICorner")
+	C.Parent = name
+	C.CornerRadius = UDim.new(0, Radius)
+end
+
+function addStrokes(name, Size)
+	local C = Instance.new("UIStroke")
+	C.Parent = name
+	C.Thickness = Size
+	C.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
+end
+
+function addButtons(CodeName,Code)
+	local e = Instance.new("TextButton")
+	e.Text = CodeName
+	e.Parent = frame2
+	e.BackgroundColor3 = Color3.fromRGB(0, 255, 0)
+	e.TextColor3 = Color3.fromRGB(0, 0, 0)
+	e.TextScaled = true
+	e.Font = Enum.Font.GothamBold
+	e.TextStrokeTransparency = 0.6
+	addCorners(e, 13)
+	addStrokes(e, 3)
+	----------------
+	local C = Instance.new("UICorner")
+	C.Parent = e
+	C.CornerRadius = UDim.new(0, 13)
+	e.MouseButton1Click:Connect(function()
+		textBox.Text = Code
+		frame2.Visible = false
+		frame.Visible = true
+	end)
+end
+
+-- Styling the GUI
+screenGui.Parent = game.Players.LocalPlayer.PlayerGui
+screenGui.ResetOnSpawn = false
+screenGui.Name = "ExecutorGui"
+
+-- Main Frame
+frame.Parent = screenGui
+frame.Name = "MainFrame"
+frame.Size = UDim2.new(0.4, 0, 0.55, 0)
+frame.Position = UDim2.new(0.3, 0, 0.25, 0)
+frame.BackgroundColor3 = Color3.fromRGB(40, 40, 40)
+frame.BorderSizePixel = 0
+frame.BackgroundTransparency = 0.3
+frame.ClipsDescendants = true
+addCorners(frame, 13)
+addStrokes(frame, 3)
+
+frame2.Parent = screenGui
+frame2.Name = "Frame2"
+frame2.Size = UDim2.new(0.4, 0, 0.55, 0)
+frame2.Position = UDim2.new(0.3, 0, 0.25, 0)
+frame2.BackgroundColor3 = Color3.fromRGB(40, 40, 40)
+frame2.BorderSizePixel = 0
+frame2.Visible = false
+frame2.BackgroundTransparency = 0.3
+frame2.ClipsDescendants = true
+addCorners(frame2, 13)
+addStrokes(frame2, 3)
+
+UIGridLayout.Parent = frame2
+UIGridLayout.CellSize = UDim2.new(0, 236,0, 50)
+
+-- Gradient Background
+local gradient = Instance.new("UIGradient")
+gradient.Parent = frame
+gradient.Color = ColorSequence.new(
+	Color3.fromRGB(50, 50, 50), 
+	Color3.fromRGB(10, 10, 10)
+)
+gradient.Rotation = 45
+
+-- Title Label with Neon Glow
+titleLabel.Parent = frame
+titleLabel.Size = UDim2.new(1, 0, 0.1, 0)
+titleLabel.Position = UDim2.new(0, 0, 0, 0)
+titleLabel.BackgroundTransparency = 1
+titleLabel.Text = "Code Executor"
+titleLabel.TextColor3 = Color3.fromRGB(0, 255, 0)
+titleLabel.TextScaled = true
+titleLabel.TextStrokeTransparency = 0.5
+titleLabel.TextStrokeColor3 = Color3.fromRGB(0, 255, 0)
+
+-- Scrolling Frame for the TextBox
+scrollingFrame.Size = UDim2.new(0.9, 0, 0.6, 0)
+scrollingFrame.Parent = frame
+scrollingFrame.Position = UDim2.new(0.05, 0, 0.15, 0)
+scrollingFrame.BackgroundColor3 = Color3.fromRGB(20, 20, 20)
+scrollingFrame.ScrollingEnabled = true  -- Enable scrolling
+scrollingFrame.CanvasSize = UDim2.new(0,0,9999,0)
+
+-- TextBox for Code Input inside the ScrollingFrame
+textBox.Size = UDim2.new(1, 0, 1, 0)  -- Take up the entire space of the ScrollingFrame
+textBox.Parent = scrollingFrame
+textBox.BackgroundColor3 = Color3.fromRGB(20, 20, 20)
+textBox.TextColor3 = Color3.fromRGB(255, 255, 255)
+textBox.PlaceholderText = "Enter Lua code here..."
+textBox.Text = ""
+textBox.ClearTextOnFocus = false
+textBox.TextXAlignment = Enum.TextXAlignment.Left
+textBox.TextYAlignment = Enum.TextYAlignment.Top
+textBox.MultiLine = true
+textBox.TextSize = 16
+textBox.TextTransparency = 0.1
+addCorners(textBox, 13)
+addStrokes(textBox, 3)
+
+-- Run Button with Hover Animation
+runButton.Size = UDim2.new(0.49, 0, 0.2, 0)
+runButton.Position = UDim2.new(0.05, 0,0.775, 0)
+runButton.Text = "Run Code"
+runButton.Parent = frame
+runButton.BackgroundColor3 = Color3.fromRGB(0, 255, 0)
+runButton.TextColor3 = Color3.fromRGB(0, 0, 0)
+runButton.TextSize = 18
+runButton.Font = Enum.Font.GothamBold
+runButton.TextStrokeTransparency = 0.6
+addCorners(runButton, 13)
+addStrokes(runButton, 3)
+
+clearButton.Size = UDim2.new(0.223, 0,0.2, 0)
+clearButton.Position = UDim2.new(0.538, 0,0.775, 0)
+clearButton.Text = "Clear Code"
+clearButton.Parent = frame
+clearButton.BackgroundColor3 = Color3.fromRGB(0, 255, 0)
+clearButton.TextColor3 = Color3.fromRGB(0, 0, 0)
+clearButton.TextSize = 18
+clearButton.Font = Enum.Font.GothamBold
+clearButton.TextStrokeTransparency = 0.6
+addCorners(clearButton, 13)
+addStrokes(clearButton, 3)
+
+scriptsframe.Position = UDim2.new(0.761, 0,0.775, 0)
+scriptsframe.Size = UDim2.new(0.189, 0,0.2, 0)
+scriptsframe.Text = "Scripts"
+scriptsframe.Parent = frame
+scriptsframe.BackgroundColor3 = Color3.fromRGB(0, 255, 0)
+scriptsframe.TextColor3 = Color3.fromRGB(0, 0, 0)
+scriptsframe.TextSize = 18
+scriptsframe.Font = Enum.Font.GothamBold
+scriptsframe.TextStrokeTransparency = 0.6
+addCorners(scriptsframe, 13)
+addStrokes(scriptsframe, 3)
+
+-- Button Hover Effect
+runButton.MouseEnter:Connect(function()
+	runButton.BackgroundColor3 = Color3.fromRGB(0, 180, 0)
+end)
+
+runButton.MouseLeave:Connect(function()
+	runButton.BackgroundColor3 = Color3.fromRGB(0, 255, 0)
+end)
+
+-- Shadow Effect for Main Frame
+
+-- Notification function
+function notice(notification)
+	-- Create the notification frame and labels
+	local notifframe = Instance.new("Frame")
+	local noticetext = Instance.new("TextLabel")
+	local notice = Instance.new("TextLabel")
+
+	-- Set properties of the notification frame
+	notifframe.Parent = screenGui
+	notifframe.BackgroundColor3 = Color3.new(0.152941, 0.152941, 0.152941)
+	notifframe.Size = UDim2.new(0, 125, 0, 71)
+	notifframe.Position = UDim2.new(-0.107, 0, 0.849, 0)
+	notifframe.Name = "NoticeFrame"
+	notifframe:TweenPosition(UDim2.new(0.012, 0, 0.849, 0), "Out", "Sine", 0.3)
+
+	-- Set properties of the notification text
+	noticetext.Parent = notifframe
+	noticetext.Text = notification
+	noticetext.BackgroundTransparency = 1
+	noticetext.Position = UDim2.new(0.024, 0, 0.197, 0)
+	noticetext.Size = UDim2.new(0, 122, 0, 57)
+	noticetext.TextColor3 = Color3.new(1, 1, 1)
+	noticetext.TextStrokeTransparency = 0
+	noticetext.Name = "Notification"
+	noticetext.TextXAlignment = Enum.TextXAlignment.Left
+	noticetext.TextYAlignment = Enum.TextYAlignment.Top
+	noticetext.TextWrapped = true
+
+	-- Set properties of the notice text
+	notice.Parent = notifframe
+	notice.Text = "Notification"
+	notice.BackgroundTransparency = 1
+	notice.Position = UDim2.new(0, 0, 0, 0)  -- Set position of the 'notice' label correctly
+	notice.Size = UDim2.new(0, 125, 0, 14)
+	notice.TextColor3 = Color3.new(1, 1, 1)
+	notice.TextStrokeTransparency = 0
+	notice.Name = "Notice"
+	notice.TextXAlignment = Enum.TextXAlignment.Left
+
+	-- Wait for 3 seconds before closing the notification
+	wait(3)
+
+	-- Tween and destroy the frame
+	notifframe:TweenPosition(UDim2.new(-0.107, 0, 0.849, 0), "Out", "Sine", 0.3)
+	wait(0.3)
+	notifframe:Destroy()
+end
+
+-- Run Code Functionality
+runButton.MouseButton1Click:Connect(function()
+	local code = textBox.Text
+	local success, result = pcall(function()
+		return loadstring(code)() -- Executes the code
+	end)
+
+	if not success then
+		notice("Error running code: ".. tostring(result))
+	else
+		notice("Code executed successfully")
+	end
+end)
+
+clearButton.MouseButton1Click:Connect(function()
+	textBox.Text = ""
+	notice("Cleared code")
+end)
+
+scriptsframe.MouseButton1Click:Connect(function()
+	frame2.Visible = true
+	frame.Visible = false
+end)
+
+addButtons("Infinite Yield", "loadstring(game:HttpGet('https://raw.githubusercontent.com/EdgeIY/infiniteyield/master/source'))()")
+addButtons("Aimbot", "loadstring(game:HttpGet('https://gist.githubusercontent.com/mepro123/7a96dd0be55be5ff9531a27f9e6746b5/raw/6bd4148e2b4cf47853ae8e541dc9f83c15d19441/gistfile1.txt'))()")
+addButtons("Yeet UI", "loadstring(game:HttpGet('https://gist.githubusercontent.com/mepro123/ff759636c59c1d688a93addad9207ff8/raw/ac9df4008b8dbc8f5181e2e61694949d1da60a09/gistfile1.txt'))()")
+addButtons("Hitbox Expander", "loadstring(game:HttpGet('https://gist.githubusercontent.com/mepro123/6e371a061e102a1ee37c5d276c23dcca/raw/e603e39a0e53ebd4e3d2f2c79a8a3481b6920515/gistfile1.txt'))()")
+addButtons("MM2 Vynixu's", "loadstring(game:GetObjects('rbxassetid://4001118261')[1].Source)()")
+
+--Not made by me, check out this video: https://www.youtube.com/watch?v=z25nyNBG7Js&t=22s
+--Put this inside of your Frame and configure the speed if you would like.
+--Enjoy! Credits go to: https://www.youtube.com/watch?v=z25nyNBG7Js&t=22s
+
+local UIS = game:GetService('UserInputService')
+local frame = frame
+local dragToggle = nil
+local dragSpeed = 0.25
+local dragStart = nil
+local startPos = nil
+
+local function updateInput(input)
+	local delta = input.Position - dragStart
+	local position = UDim2.new(startPos.X.Scale, startPos.X.Offset + delta.X,
+		startPos.Y.Scale, startPos.Y.Offset + delta.Y)
+	game:GetService('TweenService'):Create(frame, TweenInfo.new(dragSpeed), {Position = position}):Play()
+end
+
+frame.InputBegan:Connect(function(input)
+	if (input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch) then 
+		dragToggle = true
+		dragStart = input.Position
+		startPos = frame.Position
+		input.Changed:Connect(function()
+			if input.UserInputState == Enum.UserInputState.End then
+				dragToggle = false
+			end
+		end)
+	end
+end)
+
+UIS.InputChanged:Connect(function(input)
+	if input.UserInputType == Enum.UserInputType.MouseMovement or input.UserInputType == Enum.UserInputType.Touch then
+		if dragToggle then
+			updateInput(input)
+		end
+	end
+end)
